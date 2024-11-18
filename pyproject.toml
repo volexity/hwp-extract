@@ -1,0 +1,125 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hwp-extract"
+dynamic = ["version"]
+description = "Simple object extractor for HWP files."
+readme = "README.md"
+license = {file = "LICENSE.md"}
+requires-python = ">=3.9"
+keywords = [
+  "hwp", "extractor"
+]
+authors = [
+  { name = "Threat Intel", email = "threatintel@volexity.com" },
+]
+classifiers = [
+  "License :: OSI Approved :: BSD License",
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+dependencies = [
+  "olefile~=0.47",
+  "pycryptodome~=3.0",
+]
+
+[project.scripts]
+hwp-extract = "hwp_extract.cli:run"
+
+[project.urls]
+Documentation = "https://github.com/volexity/hwp-extract/blob/master/README.md"
+Issues = "https://github.com/volexity/hwp-extract/issues"
+Source = "https://github.com/volexity/hwp-extract"
+
+[envs.hatch-static-analysis]
+config-path = "none"
+
+[tool.coverage.paths]
+hwp-extract = ["src/hwp_extract", "*/hwp-extract/src/hwp_extract"]
+tests = ["tests", "*/hwp_extract/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.coverage.run]
+source_pkgs = ["hwp_extract", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/hwp_extract/_version.py",
+]
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/hwp_extract/_version.py"
+
+[tool.hatch.envs.default]
+extra-dependencies = [
+  "mypy~=1.0",
+]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/hwp_extract tests}"
+
+[tool.hatch.envs.hatch-static-analysis]
+config-path = "none"
+dependencies = ["ruff~=0.8"]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.12", "3.11", "3.10", "3.9"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[[tool.mypy.overrides]]
+module = [
+  "olefile.*",
+  "pytest.*",
+]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "C901",
+  "COM812",
+  "ERA001",
+  "FIX001",
+  "FIX002",
+  "FIX003",
+  "FIX004",
+  "ISC001",
+  "PLR2004",
+  "PLR0912",
+  "PLR0913",
+  "S324",
+  "TD001",
+  "TD002",
+  "TD003",
+  "TRY400"
+]
+pydocstyle = { convention = 'google' }
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**/*" = [
+  "D",
+  "S",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["hwp_extract"]
