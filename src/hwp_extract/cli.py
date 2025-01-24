@@ -46,9 +46,7 @@ def run() -> None:
     parser.add_argument(
         "--output-directory", help="Where should extracted objects be saved to?", default=Path.cwd(), type=Path
     )
-    parser.add_argument(
-        "--password", help="Password to use to extract files from encrypted " "HWP files", action="store"
-    )
+    parser.add_argument("--password", help="Password to use to extract files from encrypted HWP files", action="store")
     parser.add_argument("--version", action="version", help="print the version of hwp-extract", version=__version__)
     args = parser.parse_args()
 

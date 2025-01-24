@@ -75,7 +75,7 @@ check = "mypy --install-types --non-interactive {args:src/hwp_extract tests}"
 
 [tool.hatch.envs.hatch-static-analysis]
 config-path = "none"
-dependencies = ["ruff~=0.8"]
+dependencies = ["ruff~=0.9"]
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.12", "3.11", "3.10", "3.9"]
