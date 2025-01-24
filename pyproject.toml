@@ -85,6 +85,7 @@ source = "vcs"
 
 [[tool.mypy.overrides]]
 module = [
+  "Cryptodome.*",
   "olefile.*",
   "pytest.*",
 ]

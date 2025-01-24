@@ -5,7 +5,10 @@
 
 import hashlib
 
-from Crypto.Cipher import AES
+try:
+    from Cryptodome.Cipher import AES
+except ModuleNotFoundError:
+    from Crypto.Cipher import AES
 
 
 def pad(s: bytes) -> bytes:
